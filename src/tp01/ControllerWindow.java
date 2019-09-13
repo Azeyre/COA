@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class ControllerWindow {
@@ -18,10 +19,6 @@ public class ControllerWindow {
 	Button btAuditeur;
 	TextArea textArea;
 	TextField textField;
-
-	public void initialize(){
-
-	}
 
 	public void nouveauAuditeur(){
 		newWindow();

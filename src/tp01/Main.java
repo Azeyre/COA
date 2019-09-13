@@ -1,12 +1,12 @@
 package tp01;
 
-import java.io.File;
-import java.net.URL;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -17,8 +17,19 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		 URL fxmlUrl = new File("src/tp01/main.fxml").toURL();
-		 Parent window = FXMLLoader.load(fxmlUrl); stage.setScene(new Scene(window));
-		 stage.setTitle("Radio Tchat"); stage.show();
+		VBox vbox = new VBox();
+
+		Button btAuditeur = new Button("Nouveau Auditeur");
+		TextArea txtArea = new TextArea();
+		TextField txtField = new TextField();
+
+		btAuditeur.setMaxWidth(Double.MAX_VALUE);
+		vbox.setVgrow(txtArea, Priority.ALWAYS);
+		vbox.getChildren().addAll(btAuditeur, txtArea, txtField);
+
+		Scene scene = new Scene(vbox);
+		stage.setScene(scene);
+		stage.setTitle("Radio chat");
+		stage.show();
 	}
 }
