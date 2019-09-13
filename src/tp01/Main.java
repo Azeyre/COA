@@ -5,11 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+	protected TextArea txtArea;
 
 	public static void main(String[] args){
 		launch();
@@ -18,14 +22,17 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		VBox vbox = new VBox();
+		Sub sub = new Sub();
 
 		Button btAuditeur = new Button("Nouveau Auditeur");
-		TextArea txtArea = new TextArea();
+		txtArea = new TextArea();
 		TextField txtField = new TextField();
 
-		btAuditeur.setOnMouseClicked(e -> {
-			openNewWindow();
-		});
+		btAuditeur.setOnMouseClicked(e -> new Obs(sub) );
+
+		txtArea.setEditable(false);
+
+		txtField.setOnKeyPressed(e -> keyPressed(sub, txtArea, txtField, e) );
 
 		btAuditeur.setMaxWidth(Double.MAX_VALUE);
 		vbox.setVgrow(txtArea, Priority.ALWAYS);
@@ -37,19 +44,18 @@ public class Main extends Application {
 		stage.show();
 	}
 
-	private void openNewWindow(){
-		VBox vbox = new VBox();
+	private void keyPressed(Sub sub, TextArea txtArea, TextField txtField, KeyEvent e) {
+		if(e.getCode().equals(KeyCode.ENTER)){
+			txtArea.setText(txtArea.getText() + "\n" + txtField.getText());
+			txtField.setText("");
+			sub.notifyObservers();
+		}
+	}
 
-		TextArea txtArea = new TextArea();
-		TextField txtField = new TextField();
+	public class Sub extends Subject {
 
-		vbox.setVgrow(txtArea, Priority.ALWAYS);
-		vbox.getChildren().addAll(txtArea, txtField);
-
-		Scene scene = new Scene(vbox);
-		Stage stage = new Stage();
-		stage.setScene(scene);
-		stage.setTitle("Radio chat");
-		stage.show();
+		public String getText() {
+			return txtArea.getText();
+		}
 	}
 }

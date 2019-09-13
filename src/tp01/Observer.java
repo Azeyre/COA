@@ -1,7 +1,7 @@
 package tp01;
 
-public abstract class Observer {
+public interface Observer {
 
-	public abstract void update();
+	public void update();
 
 }
