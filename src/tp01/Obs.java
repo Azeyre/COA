@@ -22,6 +22,7 @@ public class Obs implements Observer {
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		stage.setTitle("Radio chat");
+		stage.setOnCloseRequest(e -> sub.detach(this));
 		stage.show();
 		this.sub = sub;
 		sub.attach(this);
@@ -29,6 +30,6 @@ public class Obs implements Observer {
 
 	@Override
 	public void update() {
-		txtArea.setText(sub.getText());
+		txtArea.setText(txtArea.getText() + sub.getText());
 	}
 }

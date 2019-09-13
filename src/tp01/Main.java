@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	protected TextArea txtArea;
+	protected TextField txtField;
 
 	public static void main(String[] args){
 		launch();
@@ -25,8 +25,8 @@ public class Main extends Application {
 		Sub sub = new Sub();
 
 		Button btAuditeur = new Button("Nouveau Auditeur");
-		txtArea = new TextArea();
-		TextField txtField = new TextField();
+		TextArea txtArea = new TextArea();
+		txtField = new TextField();
 
 		btAuditeur.setOnMouseClicked(e -> new Obs(sub) );
 
@@ -46,16 +46,16 @@ public class Main extends Application {
 
 	private void keyPressed(Sub sub, TextArea txtArea, TextField txtField, KeyEvent e) {
 		if(e.getCode().equals(KeyCode.ENTER)){
+			sub.notifyObservers();
 			txtArea.setText(txtArea.getText() + "\n" + txtField.getText());
 			txtField.setText("");
-			sub.notifyObservers();
 		}
 	}
 
 	public class Sub extends Subject {
 
 		public String getText() {
-			return txtArea.getText();
+			return txtField.getText() + "\n";
 		}
 	}
 }
