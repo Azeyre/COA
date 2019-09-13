@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	protected TextField txtField;
+	protected TextArea txtArea;
+	protected Sub sub;
 
 	public static void main(String[] args){
 		launch();
@@ -22,17 +24,16 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		VBox vbox = new VBox();
-		Sub sub = new Sub();
-
+		sub = new Sub();
 		Button btAuditeur = new Button("Nouveau Auditeur");
-		TextArea txtArea = new TextArea();
+		txtArea = new TextArea();
 		txtField = new TextField();
 
 		btAuditeur.setOnMouseClicked(e -> new Obs(sub) );
 
 		txtArea.setEditable(false);
 
-		txtField.setOnKeyPressed(e -> keyPressed(sub, txtArea, txtField, e) );
+		txtField.setOnAction(e -> sendMessage());
 
 		btAuditeur.setMaxWidth(Double.MAX_VALUE);
 		vbox.setVgrow(txtArea, Priority.ALWAYS);
@@ -44,18 +45,25 @@ public class Main extends Application {
 		stage.show();
 	}
 
-	private void keyPressed(Sub sub, TextArea txtArea, TextField txtField, KeyEvent e) {
-		if(e.getCode().equals(KeyCode.ENTER)){
+	private void sendMessage() {
+		if(!txtField.getText().isEmpty()){
+			sub.setText("Principal : " + txtField.getText());
 			sub.notifyObservers();
-			txtArea.setText(txtArea.getText() + "\n" + txtField.getText());
 			txtField.setText("");
 		}
 	}
 
 	public class Sub extends Subject {
 
+		String txt;
+
+		public void setText(String s){
+			txtArea.setText(txtArea.getText() + "\n" + s);
+			txt = s;
+		}
+
 		public String getText() {
-			return txtField.getText() + "\n";
+			return txt + "\n";
 		}
 	}
 }
