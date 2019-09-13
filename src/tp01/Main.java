@@ -23,11 +23,33 @@ public class Main extends Application {
 		TextArea txtArea = new TextArea();
 		TextField txtField = new TextField();
 
+		btAuditeur.setOnMouseClicked(e -> {
+			openNewWindow();
+		});
+
 		btAuditeur.setMaxWidth(Double.MAX_VALUE);
 		vbox.setVgrow(txtArea, Priority.ALWAYS);
 		vbox.getChildren().addAll(btAuditeur, txtArea, txtField);
 
 		Scene scene = new Scene(vbox);
+		stage.setScene(scene);
+		stage.setTitle("Radio chat");
+		stage.show();
+	}
+
+	private void openNewWindow(){
+		VBox vbox = new VBox();
+
+		Button btAuditeur = new Button("Nouveau Auditeur");
+		TextArea txtArea = new TextArea();
+		TextField txtField = new TextField();
+
+		btAuditeur.setMaxWidth(Double.MAX_VALUE);
+		vbox.setVgrow(txtArea, Priority.ALWAYS);
+		vbox.getChildren().addAll(btAuditeur, txtArea, txtField);
+
+		Scene scene = new Scene(vbox);
+		Stage stage = new Stage();
 		stage.setScene(scene);
 		stage.setTitle("Radio chat");
 		stage.show();
