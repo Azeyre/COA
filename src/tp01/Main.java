@@ -40,13 +40,11 @@ public class Main extends Application {
 	private void openNewWindow(){
 		VBox vbox = new VBox();
 
-		Button btAuditeur = new Button("Nouveau Auditeur");
 		TextArea txtArea = new TextArea();
 		TextField txtField = new TextField();
 
-		btAuditeur.setMaxWidth(Double.MAX_VALUE);
 		vbox.setVgrow(txtArea, Priority.ALWAYS);
-		vbox.getChildren().addAll(btAuditeur, txtArea, txtField);
+		vbox.getChildren().addAll(txtArea, txtField);
 
 		Scene scene = new Scene(vbox);
 		Stage stage = new Stage();
