@@ -15,7 +15,7 @@ public class VueFahrenheit implements Observer {
 
 	private TextField txtField;
 
-	public VueFahrenheit(){
+	public VueFahrenheit() {
 		VBox vbox = new VBox();
 		Label label = new Label("Temperature Fahrenheit");
 		txtField = new TextField("68");
@@ -27,10 +27,10 @@ public class VueFahrenheit implements Observer {
 		plus.setOnAction(e -> VueCelcius.model.setTemperature(modif(1)));
 		moins.setOnAction(e -> VueCelcius.model.setTemperature(modif(-1)));
 		txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-        	if(!newValue.matches("[\\-]?[0-9]*[\\.]?[0-9]*")) {
-        		txtField.setText(oldValue);
-            }
-        });
+			if (!newValue.matches("[\\-]?[0-9]*[\\.]?[0-9]*")) {
+				txtField.setText(oldValue);
+			}
+		});
 
 		vbox.getChildren().addAll(label, txtField, hbox);
 		Scene scene = new Scene(vbox);
@@ -40,12 +40,12 @@ public class VueFahrenheit implements Observer {
 		stage.show();
 	}
 
-	private double modif(int i){
+	private double modif(int i) {
 		double temp = Double.valueOf(txtField.getText()) + i;
 		return (temp - 32) / 1.8;
 	}
 
-	private double getCelcius(){
+	private double getCelcius() {
 		return (Double.valueOf(txtField.getText()) - 32) / 1.8;
 	}
 
@@ -54,9 +54,9 @@ public class VueFahrenheit implements Observer {
 		double temp = ((TemperatureModel) obs).getTemperature();
 		temp = (temp * 1.8) + 32;
 		txtField.setText("" + temp);
-		if(((TemperatureModel) obs).getTemperature() >= 40){
+		if (((TemperatureModel) obs).getTemperature() >= 40) {
 			txtField.setStyle("-fx-background-color: orange;");
-		} else if(((TemperatureModel) obs).getTemperature() <= 0){
+		} else if (((TemperatureModel) obs).getTemperature() <= 0) {
 			txtField.setStyle("-fx-background-color: blue;");
 		} else {
 			txtField.setStyle("-fx-background-color: white;");

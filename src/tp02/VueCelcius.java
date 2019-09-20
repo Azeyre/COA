@@ -14,19 +14,20 @@ import javafx.stage.Stage;
 
 public class VueCelcius extends Application implements Observer {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		model = new TemperatureModel();
 		launch();
 	}
+
 	public static TemperatureModel model;
 	private TextField txtField;
 
 	@Override
 	public void update(Observable obs, Object o) {
 		txtField.setText("" + ((TemperatureModel) obs).getTemperature());
-		if(((TemperatureModel) obs).getTemperature() >= 40){
+		if (((TemperatureModel) obs).getTemperature() >= 40) {
 			txtField.setStyle("-fx-background-color: orange;");
-		} else if(((TemperatureModel) obs).getTemperature() <= 0){
+		} else if (((TemperatureModel) obs).getTemperature() <= 0) {
 			txtField.setStyle("-fx-background-color: blue;");
 		} else {
 			txtField.setStyle("-fx-background-color: white;");
@@ -40,10 +41,10 @@ public class VueCelcius extends Application implements Observer {
 		txtField = new TextField("20");
 		txtField.setOnAction(e -> model.setTemperature(Double.valueOf(txtField.getText())));
 		txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-        	if(!newValue.matches("[\\-]?[0-9]*[\\.]?[0-9]*")) {
-        		txtField.setText(oldValue);
-            }
-        });
+			if (!newValue.matches("[\\-]?[0-9]*[\\.]?[0-9]*")) {
+				txtField.setText(oldValue);
+			}
+		});
 		HBox bts = new HBox();
 		Button plus = new Button("+");
 		Button moins = new Button("-");
@@ -65,7 +66,7 @@ public class VueCelcius extends Application implements Observer {
 		model.addObserver(vue2);
 	}
 
-	private double modif(int i){
+	private double modif(int i) {
 		return Double.valueOf(txtField.getText()) + i;
 	}
 
