@@ -14,18 +14,21 @@ import javafx.stage.Stage;
 public class VueFahrenheit implements Observer {
 
 	private TextField txtField;
+	private TemperatureModel model;
 
-	public VueFahrenheit() {
+	public VueFahrenheit(Observable o) {
+		model = (TemperatureModel) o;
+		model.addObserver(this);
 		VBox vbox = new VBox();
 		Label label = new Label("Temperature Fahrenheit");
 		txtField = new TextField("68");
-		txtField.setOnAction(e -> VueCelcius.model.setTemperature(getCelcius()));
+		txtField.setOnAction(e -> model.setTemperature(getCelcius()));
 		Button plus = new Button("+");
 		Button moins = new Button("-");
 		HBox hbox = new HBox();
 		hbox.getChildren().addAll(plus, moins);
-		plus.setOnAction(e -> VueCelcius.model.setTemperature(modif(1)));
-		moins.setOnAction(e -> VueCelcius.model.setTemperature(modif(-1)));
+		plus.setOnAction(e -> model.incrementeFahrenheit(1));
+		moins.setOnAction(e -> model.incrementeFahrenheit(-1));
 		txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (!newValue.matches("[\\-]?[0-9]*[\\.]?[0-9]*")) {
 				txtField.setText(oldValue);
@@ -38,11 +41,6 @@ public class VueFahrenheit implements Observer {
 		stage.setScene(scene);
 		stage.setTitle("Temperature en Fahrenheit");
 		stage.show();
-	}
-
-	private double modif(int i) {
-		double temp = Double.valueOf(txtField.getText()) + i;
-		return (temp - 32) / 1.8;
 	}
 
 	private double getCelcius() {

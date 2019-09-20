@@ -13,8 +13,11 @@ import javafx.stage.Stage;
 public class VueCelcius2 implements Observer {
 
 	private Slider slider;
+	private TemperatureModel model;
 
-	public VueCelcius2() {
+	public VueCelcius2(Observable o) {
+		model = (TemperatureModel) o;
+		model.addObserver(this);
 		slider = new Slider(-20, 100, 20);
 		slider.setOrientation(Orientation.VERTICAL);
 		slider.setShowTickLabels(true);
@@ -25,7 +28,7 @@ public class VueCelcius2 implements Observer {
 
 			@Override
 			public void changed(ObservableValue arg0, Object arg1, Object arg2) {
-				VueCelcius.model.setTemperature(slider.getValue());
+				model.setTemperature(slider.getValue());
 			}
 		});
 		Scene scene = new Scene(slider);

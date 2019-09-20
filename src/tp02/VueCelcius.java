@@ -15,11 +15,10 @@ import javafx.stage.Stage;
 public class VueCelcius extends Application implements Observer {
 
 	public static void main(String[] args) {
-		model = new TemperatureModel();
 		launch();
 	}
 
-	public static TemperatureModel model;
+	public TemperatureModel model;
 	private TextField txtField;
 
 	@Override
@@ -36,6 +35,7 @@ public class VueCelcius extends Application implements Observer {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		model = new TemperatureModel();
 		VBox vbox = new VBox();
 		Label label = new Label("Temperature Celcius");
 		txtField = new TextField("20");
@@ -48,8 +48,8 @@ public class VueCelcius extends Application implements Observer {
 		HBox bts = new HBox();
 		Button plus = new Button("+");
 		Button moins = new Button("-");
-		plus.setOnAction(e -> model.setTemperature(modif(1)));
-		moins.setOnAction(e -> model.setTemperature(modif(-1)));
+		plus.setOnAction(e -> model.incrementTemperature(1));
+		moins.setOnAction(e -> model.incrementTemperature(-1));
 		bts.getChildren().addAll(plus, moins);
 
 		vbox.getChildren().addAll(label, txtField, bts);
@@ -58,16 +58,14 @@ public class VueCelcius extends Application implements Observer {
 		stage.setTitle("Temperature en Celcius");
 		stage.show();
 
-		VueFahrenheit vue = new VueFahrenheit();
-		VueCelcius2 vue2 = new VueCelcius2();
+		VueFahrenheit vue = new VueFahrenheit(model);
+		VueCelcius2 vue2 = new VueCelcius2(model);
 
 		model.addObserver(this);
-		model.addObserver(vue);
-		model.addObserver(vue2);
 	}
 
-	private double modif(int i) {
-		return Double.valueOf(txtField.getText()) + i;
+	public Observable getModel(){
+		return model;
 	}
 
 }
